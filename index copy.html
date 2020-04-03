@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+  <script src="js/is.mobile.js"></script>
+  <script src="js/jquery.maskedinput.min.js"></script>
+  <script src="js/formcheck1.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+</head>
+
+<style>
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  label {
+    margin-bottom: 5px;
+  }
+
+  .form-control {
+    height: auto;
+    padding: 8px 12px;
+  }
+
+
+
+  .main-form {
+    max-width: 400px;
+    padding: 10px 40px;
+    background: #009edf;
+    color: #FFF;
+    text-shadow: none;
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.31);
+  }
+
+  textarea {
+    resize: none;
+  }
+</style>
+
+<body>
+  <div class="container-fluid">
+    <div class="row main-form">
+
+      <form role="form" method="post" class="form_check form_style" action="input1.php">
+
+        <div class="form-group">
+          <label for="user_name"><b>Имя:</b></label><br />
+          <input type="text" class="form-control us" id="user_name" name="user_name" required placeholder="Имя"
+            max="30" />
+          <small id="passwordHelpBlock" class="form-text text-info">
+            Поле обязательное для заполнения. Допускается имя длиной 1-30 символов
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label for="user_phone"><b>Телефон:</b></label><br />
+          <input type="tel" class="form-control phonefield" id="user_phone" placeholder="+375-XX-XXX-XX-XX"
+            name="user_phone" required />
+          <small id="passwordHelpBlock" class="form-text text-info">
+            Поле обязательное для заполнения. Телефон вводится в формате "+375-XX-XXX-XX-XX"
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label for="user_mail"><b>E-mail:</b></label><br />
+          <input type="text" class="form-control mailfield" id="user_mail" name="user_mail" required
+            placeholder="E-mail" />
+          <small id="passwordHelpBlock" class="form-text text-info">
+            Поле обязательное для заполнения
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label for="user_text"> <b>Текст сообщения:</b></label>
+          <textarea class="form-control" name="comment" id="user_work" placeholder="Введите текст сообщения"></textarea>
+          <small id="passwordHelpBlock" class="form-text text-info">
+            Допускается не заполнять
+          </small>
+        </div>
+
+        <div class="form-group"></div>
+        <p><input class="btn btn-success" type="submit" value="Отправить">
+          <input class="btn btn-danger" type="reset" value="Отмена"></p>
+    </div>
+
+    </form>
+  </div>
+  </div>
+
+</body>
+
+</html>
