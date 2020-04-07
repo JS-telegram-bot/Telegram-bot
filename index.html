@@ -1,43 +1,117 @@
 <!doctype html>
-
 <html>
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"/>
+  <script crossorigin="anonymous" integrity="sha256-KrRa8Ba46ro/+RPPjj/MSJqZViXxrnTp8Nyg5zLpHpQ="
+          src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/js/bootstrap.bundle.js"></script>
+  <link crossorigin="anonymous"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap.min.css"
+        integrity="sha256-/ykJw/wDxMa0AQhHDYfuMEwVb4JHMx9h4jD4XvHqVzU=" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+        integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous"/>
+
+  <script>
+    $(function () {
+      $('#phone').mask('+375-99-999-99-99', {autoclear: false});
+
+      var form = $('form');
+      form.submit(function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        form.addClass('was-validated');
+        if (form[0].checkValidity() === false) {
+          return false;
+        }
+
+        var formData = [
+          'Имя: ' + $('#username').val(),
+          'Телефон: ' + $('#phone').val(),
+          'Email: ' + $('#email').val(),
+        ];
+
+        if($("#message").val().length > 0) {
+          formData.push('Сообщение: ' + $('#message').val());
+        }
+
+        var botId = '1122936546:AAFX2goLcgvARa4YfsiBuso4tOV5yMVODGY';
+        var chatId = '-1001262368010';
+        var url = `https://api.telegram.org/bot${botId}/sendMessage?chat_id=${chatId}&text=${formData.join('%0A')}`;
+
+        fetch(url)
+          .then(res => {
+            if(res.ok) {
+              alert("Сообщение успешно отправлено!");
+              form.trigger('reset');
+            } else {
+              alert("Ошибка отправки сообщения!");
+            }
+          })
+          .catch(console.error)
+      });
+      form.on("reset", function() {
+        form.removeClass('was-validated');
+      });
+    });
+  </script>
+
 </head>
 
-<body>
+<body class="bg-light">
 
-  <form method="post" class="form_check form_style" action="input1.php">
+<div class="container w-50 mx-auto center">
+  <div class="py-3 text-center">
+    <i class="fa fa-envelope fa-6x d-block mx-auto" style="color: #74b4f9;" ></i>
+    <h2>Отправка сообщений в Telegram</h2>
+  </div>
 
-    <p class="rline">
-      <label for="user_name"><b>Имя (обязательное):</b></label><br />
-      <input type="text" class="rfield" id="user_name" name="user_name" min="1" max="30" required />
-    </p>
-    <p class="rline">
-      <label for="user_phone"><b>Телефон (обязательное):</b></label><br />
-      <input type="tel" class="rfield phonefield" id="user_phone" placeholder="+375-12-345-67-89" name="user_phone"
-        required />
-    </p>
+  <div class="alert alert-primary" role="alert">
+    <i class="fa fa-info-circle mr-3"></i>Для отправки сообщения заполните все поля отмеченные
+    <a href="#"
+       class="alert-link">*</a>
+  </div>
 
-    <p class="rline">
-      <label for="user_mail"><b>E-mail (обязательное):</b></label><br />
-      <input type="text" class="rfield mailfield" id="user_mail" name="user_mail" required />
-    </p>
+  <form class="needs-validation" novalidate role="form">
+    <div class="form-group">
+      <label for="username"><b>Имя: *</b></label><br/>
+      <input class="form-control us" id="username" maxlength="30" minlength="1" name="user_name" placeholder="Ваше имя"
+             required pattern="(?!^ +$)^.+$" type="text"/>
+      <div class="invalid-feedback">
+        Введите корректное имя
+      </div>
+    </div>
 
-    <p class="rline">
-      <label for="user_text"> <b>Текст сообщения</b></label>
-      <br />
-      <textarea name="comment" cols="40" rows="3" id="user_work"></textarea></p>
-    <p><input type="submit" value="Отправить" class="btnsubmit">
-      <input type="reset" value="Отмена"></p>
+    <div class="form-group">
+      <label for="phone"><b>Телефон: *</b></label><br/>
+      <input class="form-control" id="phone" name="phone" placeholder="+375-XX-XXX-XX-XX"
+             required pattern="\+[0-9]{3}-[0-9]{2}-[0-9]{3}-[0-9]{2}-[0-9]{2}" type="tel"/>
+      <div class="invalid-feedback">
+        Телефон вводится в формате "+375-XX-XXX-XX-XX"
+      </div>
+    </div>
 
+    <div class="form-group">
+      <label for="email"><b>E-mail: *</b></label><br/>
+      <input class="form-control" id="email" name="email" placeholder="Введите свой e-mail" required
+             type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
+      <div class="invalid-feedback">
+        Email введен в неверном формате
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="message"> <b>Текст сообщения:</b></label>
+      <textarea class="form-control" draggable="false" id="message" name="message" maxlength="500" rows="3" style="resize: none"
+                placeholder="Введите текст сообщения"></textarea>
+    </div>
+
+    <input class="btn btn-primary" type="submit" value="Отправить">
+    <input class="btn btn-danger" type="reset" value="Отмена">
   </form>
-
-  <script src="js/jquery.min.js"></script>
-  <script src="js/is.mobile.js"></script>
-  <script src="js/jquery.maskedinput.min.js"></script>
-  <script src="js/formcheck.js"></script>
+</div>
 
 </body>
 
