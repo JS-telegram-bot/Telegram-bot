@@ -28,18 +28,18 @@
         }
 
         var formData = [
-          'Имя: ' + $('#username').val(),
-          'Телефон: ' + $('#phone').val(),
-          'Email: ' + $('#email').val(),
+          '*Имя:* ' + $('#username').val(),
+          '*Телефон:* ' + $('#phone').val(),
+          '*Email:* ' + $('#email').val(),
         ];
 
         if($("#message").val().length > 0) {
-          formData.push('Сообщение: ' + $('#message').val());
+          formData.push('*Сообщение:* ' + '%0A' + $('#message').val());
         }
 
         var botId = '1122936546:AAFX2goLcgvARa4YfsiBuso4tOV5yMVODGY';
         var chatId = '-1001262368010';
-        var url = `https://api.telegram.org/bot${botId}/sendMessage?chat_id=${chatId}&text=${formData.join('%0A')}`;
+        var url = `https://api.telegram.org/bot${botId}/sendMessage?chat_id=${chatId}&text=${formData.join('%0A')}&parse_mode=Markdown`;
 
         fetch(url)
           .then(res => {
@@ -62,7 +62,7 @@
 
 <body class="bg-light">
 
-<div class="container w-50 mx-auto center">
+<div class="container w-100 mx-auto center">
   <div class="py-3 text-center">
     <i class="fa fa-envelope fa-6x d-block mx-auto" style="color: #74b4f9;" ></i>
     <h2>Отправка сообщений в Telegram</h2>
@@ -79,6 +79,10 @@
       <label for="username"><b>Имя: *</b></label><br/>
       <input class="form-control us" id="username" maxlength="30" minlength="1" name="user_name" placeholder="Ваше имя"
              required pattern="(?!^ +$)^.+$" type="text"/>
+
+      <small>
+        Допускается имя длиной 1-30 символов
+      </small>
       <div class="invalid-feedback">
         Введите корректное имя
       </div>
@@ -106,7 +110,12 @@
       <label for="message"> <b>Текст сообщения:</b></label>
       <textarea class="form-control" draggable="false" id="message" name="message" maxlength="500" rows="3" style="resize: none"
                 placeholder="Введите текст сообщения"></textarea>
+      <small>
+        Допускается сообщение длиной до 500 символов
+      </small>
     </div>
+
+
 
     <input class="btn btn-primary" type="submit" value="Отправить">
     <input class="btn btn-danger" type="reset" value="Отмена">
